@@ -1,7 +1,48 @@
-function [ lines ] = extractEdges( img )
+function [ lines ] = extractEdges( img, manualTrace )
 % Take in image, threshold, and peform line detection
 %   For dark images with green edges on calibration marker
+% Inputs: 
+%   img         <- Image with calibration marker in it
+%   manualTrace <- flag to indicate user input for lines in leiu of
+%                   automagic extraction
+% Outputs:
+%   lines       <- 3 pairs of points [x1 x2; x3 x4; x5 x6] indicating
+%                   endpoints of extracted lines of calibration target
 
+%% Manually input 3 lines if manualTrace is set to true
+if manualTrace
+    
+    figure
+    imshow(img);
+  
+    [x, y] = ginput(2);
+    % Assumption about input is 3 individual lines describing calibration target lines
+    pt1 = [x(1) y(1) 1]';
+    pt2 = [x(2) y(2) 1]';
+    axis tight
+    hold on
+    plot([pt1(1) pt2(1)], [pt1(2), pt2(2)],'Color','g','LineWidth',1)
+    hold off
+    clearvars x y
+    [x, y] = ginput(2);
+    pt3 = [x(1) y(1) 1]';
+    pt4 = [x(2) y(2) 1]';
+    hold on
+    plot([pt3(1) pt4(1)], [pt3(2), pt4(2)],'Color','g','LineWidth',1)
+    hold off
+    clearvars x y
+    [x, y] = ginput(2);
+    pt5 = [x(1) y(1) 1]';
+    pt6 = [x(2) y(2) 1]';
+    axis tight
+    hold on
+    plot([pt5(1) pt6(1)], [pt5(2), pt6(2)],'Color','g','LineWidth',1)
+    hold off
+    clearvars x y
+    
+    lines = [pt1(1:2)' pt2(1:2)'; pt3(1:2)' pt4(1:2)'; pt5(1:2)' pt6(1:2)'];
+   return 
+end
 %% Adjust contrast of RGB image
 % imgConv = imadjust(img,[0.95 0.025 0.95; 1 0.2 1],[]);
 
