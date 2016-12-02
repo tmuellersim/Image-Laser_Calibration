@@ -5,7 +5,6 @@ pointSize = 5;  % Size of plotted point
 numRays = scanData.numRays;
 points = scanData.points;
 
-
 figure
 % Adjust potential hit points (intensity above intThresh) for visualization
 ptSize = pointSize * ones(1, numRays);
