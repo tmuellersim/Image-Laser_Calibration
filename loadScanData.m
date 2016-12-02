@@ -21,8 +21,8 @@ data.points = zeros(3, data.numRays);
 for i = 1:data.numRays
     data.rangeData(i) = scanData(rangeStart - 1 + i);
     data.intensityData(i) = scanData(rangeStart + data.numRays + i);
-    data.points(1, i) = data.rangeData(i) * cos(data.minAngle + data.angleIncrement*(i-1));  %  x-value
-    data.points(2, i) = data.rangeData(i) * sin(data.minAngle + data.angleIncrement*(i-1));  %  y-value
+    data.points(1, i) = data.rangeData(i) * cos(data.minAngle + data.angleIncrement*(i-1));  %  z-value
+    data.points(2, i) = - data.rangeData(i) * sin(data.minAngle + data.angleIncrement*(i-1));  %  x-value
     data.points(3, i) = data.intensityData(i);  %  intensity value
 end
 

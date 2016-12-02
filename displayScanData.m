@@ -22,7 +22,7 @@ ax = gca;
 grid on
 axis equal
 hold off
-title('Laser Scan Data'); xlabel('x (m)'); ylabel('y (m)');
+title('Laser Scan Data'); xlabel('z (m)'); ylabel('x (m)');
 caxis([intThresh max(points(3, :))])
 h = colorbar;
 ylabel(h, 'Laser Intensity values')
