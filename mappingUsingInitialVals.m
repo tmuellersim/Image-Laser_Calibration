@@ -2,7 +2,7 @@ function [] = mappingUsingInitialVals(img, imgLines, scanPoints)
 
 %% Initial Parameters
 alpha = -pi/2; beta = 0; gamma = 0;
-tx = 0.617; ty = 0.05; tz = 0;
+tx = 0.1167; ty = 0.05; tz = 0;
 P = [726.927917480469,0,641.600148583195,0;0,780.887329101563,476.630044074220,0;0,0,1,0];
 
 %% Derived Parameters
