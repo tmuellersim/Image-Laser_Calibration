@@ -17,14 +17,14 @@ if manualPoints
     displayScanData(scanData, intThresh)
     xlim([min(scanData.points(1, hitIdx))-.25, max(scanData.points(1, hitIdx))+.25])
     ylim([min(scanData.points(2, hitIdx))-.25, max(scanData.points(2, hitIdx))+.25])
-    [x, y] = ginput(3);
+    [z, x] = ginput(3);
     % Assumption about input is 3 individual lines describing calibration target lines
-    pt1 = [x(1) y(1)]';
-    pt2 = [x(2) y(2)]';
-    pt3 = [x(3) y(3)]';
+    pt1 = [-x(1) 0 z(1)]'; 
+    pt2 = [-x(2) 0 z(2)]';
+    pt3 = [-x(3) 0 z(3)]';
     axis tight
     hold on
-    scatter(x, y, 5, 'filled', 'b')
+    scatter(z, x, 5, 'filled', 'b')
     hold off
     
     hitPoints = [pt1'; pt2'; pt3'];
