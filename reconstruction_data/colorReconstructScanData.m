@@ -20,4 +20,27 @@ imageData = loadImageHeaderData(imageDataCell);
 odomDataCell = importOdomData(odomFilename);
 odomData = loadOdomData(odomDataCell);
 
+%% Find smallest time in data
+[minTime, minTimeIdx] = min([imageData.stamp(1) odomData.stamp(1) scanData.stamp(1)]);
+% Bring all time stamps to the start of the earliest datum received
+imageData.stamp = imageData.stamp - minTime;
+odomData.stamp = odomData.stamp - minTime;
+scanData.stamp = scanData.stamp - minTime;
+% Convert from nanoseconds to seconds
+imageData.stamp = imageData.stamp/1e9;
+odomData.stamp = odomData.stamp/1e9;
+scanData.stamp = scanData.stamp/1e9;
+
+%% Sync time stamps to scan data, as that is stream with the lowest frequency
+[idxImage, dImage] = dsearchn(imageData.stamp, scanData.stamp);
+[idxOdom, dOdom] = dsearchn(odomData.stamp, scanData.stamp);
+
+imageData = imageData(:, idxImage);
+
 %% Build odometry using twist values for robot
+
+
+
+
+
+

@@ -11,8 +11,10 @@ data.numRays = round((data.maxAngle - data.minAngle)/data.angleIncrement);  % Nu
 rangeStart = 12;  % index of starting range
 
 % Extract scan data from images
-numScans = length(scanDataCell);
-
+numScans = size(scanData, 1);
+data.time = zeros(numScans, 1);
+data.sequence = zeros(numScans, 1);
+data.stamp = zeros(numScans, 1);
 data.rangeData = zeros(numScans, data.numRays);
 data.intensityData = zeros(numScans, data.numRays);
 data.points = zeros(3, data.numRays, numScans);
@@ -25,6 +27,9 @@ for j = 1:numScans
         data.points(2, i, j) = - data.rangeData(i) * sin(data.minAngle + data.angleIncrement*(i-1));  %  x-value
         data.points(3, i, j) = data.intensityData(i);  %  intensity value
     end
+    data.time(j) = scanData(j, 1);
+    data.sequence(j) = scanData(j, 2);
+    data.stamp(j) = scanData(j, 3);
 end
 
 return
