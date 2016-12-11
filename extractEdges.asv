@@ -139,9 +139,6 @@ hold off
 % end
 % 
 % hold off
-
-%% Build out 3x3 matrix of lines, with each column being a consecutive line
-C = sortrows(C, 2);
 lines = zeros(3,3);
 for i = 1:3
     point1Temp = [0 C(i, 2) 1];
