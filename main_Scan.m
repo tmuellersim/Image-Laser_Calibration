@@ -31,19 +31,20 @@ save(strcat(imgFilename(1:(end-4)), '.mat'), imgLines);
 % save imgLines.mat imgLines;
 % load imgLines.mat;
 % Test calibration images
-close all
-for i = 0:22
-    if i < 10
-        imgFilename = strcat('./image_data/calibrationImage000', num2str(i), '.png');
-    else
-        imgFilename = strcat('./image_data/calibrationImage00', num2str(i), '.png');
-    end
-    img = imread(imgFilename);
-    imgLines = extractEdges(img, manualLines);
-    saveas(gcf, strcat(imgFilename(1:(end-4)), '-FIT_LINES.jpg'))
-    save(strcat(imgFilename(1:(end-4)), '.mat'), 'imgLines');
-end
+% close all
+% for i = 0:22
+%     if i < 10
+%         imgFilename = strcat('./image_data/calibrationImage000', num2str(i), '.png');
+%     else
+%         imgFilename = strcat('./image_data/calibrationImage00', num2str(i), '.png');
+%     end
+%     img = imread(imgFilename);
+%     imgLines = extractEdges(img, manualLines);
+%     saveas(gcf, strcat(imgFilename(1:(end-4)), '-FIT_LINES.jpg'))
+%     save(strcat(imgFilename(1:(end-4)), '.mat'), 'imgLines');
+% end
 
 %% Error Minimization using Levenberg-Marquardt
 % mappingUsingInitialVals(img, imgLines, scanPoints);
 
+%%
