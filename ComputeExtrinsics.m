@@ -7,7 +7,7 @@ close all;
 imgfile_src = 'image_data';
 scanfile_src = 'scan_data';
 
-numFrames = 23;
+numFrames = 20;
 linefeats_img_all = zeros(3,3,numFrames);
 pointfeats_laser_all = zeros(4,3,numFrames);
 
@@ -35,13 +35,14 @@ end
  
 % linefeats_img : 3 X N X F format (N : no. of lines, F : no. of frames)
 % pointfeats_laser : 4 X N X F format (N : no. of points, F : no. of frames)
-alpha = -pi/2; beta = 0; gamma = 0; tx = 0.1667; ty = 0.0; tz = 0.0;
+alpha = -pi/4; beta = 0; gamma = 0; tx = 0.1326; ty = -0.1075; tz = -0.0317;
 x0 = [alpha; beta; gamma; tx; ty; tz];
-x_soln = errorMinimization(linefeats_img_all, pointfeats_laser_all, x0);
+numFramesOpt = 50;
+x_soln = errorMinimization(linefeats_img_all(:,:,1:numFramesOpt), pointfeats_laser_all(:,:,1:numFramesOpt), x0);
 
 %% Visualize Mapping of Laser Point Features onto Image Plane
 
-frame_idx = 4;
+frame_idx = 5;
 
 imgfile = [imgfile_src '/calibrationImage' sprintf('%4.4d', frame_idx-1) '.png'];
 img = imread(imgfile);
@@ -50,7 +51,7 @@ pointfeats_img_xsol = visualizeSolution(x_soln, img, pointfeats_laser_all(:,:,fr
 
 %% Colorize Laser Point Cloud
 
-frame_idx = 4;
+frame_idx = 5;
 
 scanfile  = [scanfile_src '/scan' sprintf('%1.1d', frame_idx-1) '.txt'];
 imgfile = [imgfile_src '/calibrationImage' sprintf('%4.4d', frame_idx-1) '.png'];
@@ -59,7 +60,11 @@ img = imread(imgfile);
 scanDataCell = importScanData(scanfile);
 scanData = loadScanData(scanDataCell);
 
-points_sensor = scanData.points;
-points = [-points_sensor(2,:); zeros(1,size(points_sensor,2)); points_sensor(1,:)];
+points_laser2d = scanData.points;
+points_laser3d = [-points_laser2d(2,:); zeros(1,size(points_laser2d,2)); points_laser2d(1,:)];
+intensities_laser = points_laser2d(3,:);
 
-[pts, rgb] = colorizePoints(points, img, x_soln);
+[pts, rgb] = colorizePoints(points_laser3d, intensities_laser, img, x_soln);
+rgb_norm = rgb/255;
+figure; scatter3(pts(1,:)', pts(2,:)', pts(3,:)', 10*ones(1, size(pts,2))', rgb_norm', 'filled');
+

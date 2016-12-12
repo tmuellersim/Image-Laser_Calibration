@@ -1,4 +1,4 @@
-function [points, rgb] = colorizePoints(points, img, x_vals)
+function [points, rgb] = colorizePoints(points, intensities, img, x_vals)
 
 alpha = x_vals(1); beta = x_vals(2); gamma = x_vals(3);
 tx = x_vals(4); ty = x_vals(5); tz = x_vals(6);
@@ -29,12 +29,15 @@ pointfeats_img = int16(pointfeats_img);
 for i = 1:numPoints
     
     if ( (pointfeats_img(2,i) <= 0) || (pointfeats_img(2,i) > rows) || (pointfeats_img(1,i) <= 0) || (pointfeats_img(1,i) > cols) )
-        continue;
+        rgb(1,i) = intensities(i);
+        rgb(2,i) = intensities(i);
+        rgb(3,i) = intensities(i);
+    else
+        rgb(1,i) = img(pointfeats_img(2,i), pointfeats_img(1,i), 1);
+        rgb(2,i) = img(pointfeats_img(2,i), pointfeats_img(1,i), 2);
+        rgb(3,i) = img(pointfeats_img(2,i), pointfeats_img(1,i), 3);
     end
-    
-    rgb(1,i) = img(pointfeats_img(2,i), pointfeats_img(1,i), 1);
-    rgb(2,i) = img(pointfeats_img(2,i), pointfeats_img(1,i), 2);
-    rgb(3,i) = img(pointfeats_img(2,i), pointfeats_img(1,i), 3);
+        
 end
 
 end
