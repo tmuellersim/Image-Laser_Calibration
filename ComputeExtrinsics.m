@@ -67,4 +67,3 @@ intensities_laser = points_laser2d(3,:);
 [pts, rgb] = colorizePoints(points_laser3d, intensities_laser, img, x_soln);
 rgb_norm = rgb/255;
 figure; scatter3(pts(1,:)', pts(2,:)', pts(3,:)', 10*ones(1, size(pts,2))', rgb_norm', 'filled');
-
